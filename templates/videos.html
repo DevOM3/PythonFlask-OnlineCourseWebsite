@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DoCode &mdash; Videos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    
+    <!-- <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/icomoon/style.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fancybox.min.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datepicker.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/flaticon/font/flaticon.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/aos.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+  </head>
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+  
+  <div class="site-wrap">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>   
+    
+
+    {% set img = "images/" + video.poster %}
+    <div class="intro-section single-cover" id="home-section">
+      <div class="slide-1 " style="background-image: url('{{ url_for('static', filename=img) }}');" data-stellar-background-ratio="0.5">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <div class="row justify-content-center align-items-center text-center">
+                <div class="col-lg-6">
+                  <h1 data-aos="fade-up" data-aos-delay="0">Add/Edit your Video</h1>
+                </div>
+                                
+              </div>
+              {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                          {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="site-section bg-light" id="contact-section">
+        <div class="container">
+          
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+          
+          
+                      
+                    <h2 class="section-title mb-3">Add/Edit Video details</h2>
+                      <br>
+                      <hr>
+                      <br>
+
+                      <div class="container" id="up_vid">
+                        <h2>Upload a Video</h2>  
+                        <form action="/video_uploader1" method="post" enctype="multipart/form-data">
+                          <input type="file" name="vid" id="vid"><br><br>
+                          <input class="btn btn-primary" type="submit" value="Upload">
+                        </form>
+                        <br>  
+                      </div>
+                      <br>
+                      <hr>
+                      <br>   
+
+                      <div class="container" id="up_img">
+                        <h2>Upload Video Poster</h2>  
+                        <form action="/img_uploader1" method="post" accept="image/png, image/jpeg, image/jpg" enctype="multipart/form-data">
+                          <input type="file" name="img" id="img"><br><br>
+                          <input class="btn btn-primary" type="submit" value="Upload">
+                        </form>
+                        <br>  
+                      </div>
+                      <br>
+                      <hr>
+                      <br>     
+                      
+                      <form method="post" action="/videos/{{sno}}" data-aos="fade" enctype="multipart/form-data">
+                        <label for="basic-url">Video Title</label>
+                        <div class="form-group row">
+                          <div class="col-md-12">
+                            <input type="text" class="form-control" value="{{video.title}}" name="title">
+                          </div>
+                        </div>
+
+                        <label for="basic-url">Video Poster</label>
+                        <div class="form-group row">
+                          <div class="col-md-12">
+                            <input type="text" class="form-control" value="{{video.poster}}" name="poster">
+                          </div>
+                        </div>
+                        
+                        <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Video name</span>
+                        </div>
+                        <input type="text" class="form-control" value="{{video.video}}" aria-label="Username" name="video" aria-describedby="basic-addon1">
+                        </div>
+                        
+                        <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">The course number this video belongs to &nbsp &nbsp </span>
+                        </div>
+                        <INPUT TYPE="NUMBER" MIN="0" name="course" MAX="1000" VALUE="{{video.course_sno}}">
+                        </div>
+                        
+          
+                        <div class="form-group row">
+                          <div class="col-md-6">
+                            <input type="submit" class="btn btn-primary py-3 px-5 btn-block btn-pill" value="Save Changes">
+                          </div>
+                        </div>
+
+                      </form>
+                      <div class="form-group row">
+                          <div class="col-md-6">
+                            <a href="/dashboard"><button class="btn btn-primary py-3 px-5 btn-block btn-pill">Go back to Dashboard</button></a>
+                          </div>
+                      </div>
+                      
+                </div>
+            </div>
+        </div>
+    </div>
+
+<br><hr><br>
+<div class="form-group row">
+  <div class="col-md-6">
+    <a href="/logout"><button class="btn btn-primary">Log Out</button></a>
+  </div>
+</div>
+     
+    <footer class="footer-section bg-light">
+      <div class="container">
+        <div class="row">
+          
+        </div>
+
+        <div class="row pt-5 mt-5 text-center">
+          <div class="col-md-12">
+            <div class="border-top pt-5">
+            <p>
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by DoCode
+        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+      </p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </footer>
+
+  
+    
+  </div> <!-- .site-wrap -->
+
+  <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-migrate-3.0.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.stellar.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.countdown.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.easing.1.3.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.fancybox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.sticky.js') }}"></script>
+
+  
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+  </body>
+</html>
